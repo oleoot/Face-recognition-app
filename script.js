@@ -13,4 +13,12 @@ function startVideo() {
         err => console.error('Err')
     )
 }
-// startVideo()
+video.addEventListener('play', () => {
+    const canvas = faceapi.createCanvasFromMedia(video)
+    document.body.append(canvas);
+    const displaySize = { width: video.width, height: video.height }
+    setInterval(async () => {
+        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+        console.log(detections)
+    }, 100)
+})
